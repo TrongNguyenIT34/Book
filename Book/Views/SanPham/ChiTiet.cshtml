@@ -1,0 +1,93 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    var sp = Model.Rows[0]; // chỉ hiển thị 1 sản phẩm
+}
+
+<style>
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        color: #2c3e50;
+    }
+
+    table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px 12px;
+        text-align: center; 
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #f5f5f5;
+        color: #2c3e50;
+        text-transform: uppercase;
+    }
+
+    td img {
+        width: 120px;
+        height: 160px;
+        object-fit: cover;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .gia {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .mota {
+        text-align: justify;
+        line-height: 1.5;
+    }
+
+    .back {
+        text-align: center;
+        margin: 20px;
+    }
+
+        .back a {
+            background-color: #1abc9c;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+            .back a:hover {
+                background-color: #16a085;
+            }
+</style>
+
+<h2>@ViewBag.Title</h2>
+
+<table>
+    <tr>
+        <th>Mã sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Giá</th>
+        <th>Giới thiệu sách</th>
+        <th>Hình ảnh</th>
+    </tr>
+    <tr>
+        <td>@sp["MaSP"]</td>
+        <td>@sp["TenSP"]</td>
+        <td class="gia">@String.Format("{0:#,##0}", sp["Gia"]) đ</td>
+        <td class="mota">@sp["GhiChu"]</td>
+        <td><img src="~/Images/@sp["Hinh"]" alt="@sp["TenSP"]" /></td>
+    </tr>
+</table>
+
+<div class="back">
+    <a asp-controller="Home" asp-action="Index">⬅ Quay lại</a>
+</div>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Đăng nhập</h2>
+        <form method="post" asp-action="DangNhap" asp-controller="TaiKhoan">
+            <div class="form-group">
+                <label for="sdt">📱 Số điện thoại:</label>
+                <input type="text" id="sdt" name="sdt" placeholder="Nhập số điện thoại..." required />
+            </div>
+            <div class="form-group">
+                <label for="mk">🔑 Mật khẩu:</label>
+                <input type="password" id="mk" name="mk" placeholder="Nhập mật khẩu..." required />
+            </div>
+            <button type="submit" class="btn-login">Đăng nhập</button>
+        </form>
+
+        @if (ViewBag.ThongBao != null)
+        {
+            <p class="error-msg">@ViewBag.ThongBao</p>
+        }
+
+        <div class="extra-links">
+            <a href="#">Chưa có tài khoản?</a> |
+            <a href="#">Quên mật khẩu?</a>
+        </div>
+    </div>
+</div>

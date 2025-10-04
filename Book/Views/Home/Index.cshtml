@@ -1,0 +1,79 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+}
+
+<style>
+    .product-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: flex-start;
+        margin-top: 20px;
+    }
+
+    .product-card {
+        width: 200px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 12px;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        .product-card img {
+            width: 150px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+    .product-name {
+        margin-top: 10px;
+        font-size: 15px;
+        color: #2c3e50;
+        min-height: 40px; 
+    }
+
+    .product-price {
+        color: #16a085;
+        font-weight: bold;
+        margin: 8px 0;
+    }
+
+    .btn-detail {
+        display: inline-block;
+        background: #1abc9c;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+
+        .btn-detail:hover {
+            background: #16a085;
+        }
+</style>
+
+<h2>@ViewBag.Title</h2>
+
+<div class="product-container">
+    @foreach (System.Data.DataRow r in Model.Rows)
+    {
+        <div class="product-card">
+            <img src="~/Images/@r["Hinh"]" alt="@r["TenSP"]" />
+            <div class="product-name"><b>@r["TenSP"]</b></div>
+            <div class="product-price">Giá: @String.Format("{0:#,##0}", r["Gia"]) đ</div>
+            <a asp-controller="SanPham" asp-action="ChiTiet" asp-route-id="@r["MaSP"]" class="btn-detail">Chi tiết</a>
+        </div>
+    }
+</div>

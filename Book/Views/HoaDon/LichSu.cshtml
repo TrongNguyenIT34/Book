@@ -1,0 +1,103 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Lịch sử giao dịch";
+}
+
+<style>
+    h2 {
+        text-align: center;
+        margin: 20px 0;
+        color: #2c3e50;
+    }
+
+    table {
+        width: 95%;
+        margin: 0 auto 30px auto;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        text-transform: uppercase;
+    }
+
+    .tong {
+        text-align: right;
+        font-weight: bold;
+        padding-right: 20px;
+        color: #e74c3c;
+    }
+
+    .no-data {
+        text-align: center;
+        color: #888;
+        margin-top: 30px;
+        font-style: italic;
+    }
+
+    .back {
+        text-align: center;
+        margin: 20px;
+    }
+
+        .back a {
+            background-color: #1abc9c;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+            .back a:hover {
+                background-color: #16a085;
+            }
+</style>
+
+<h2>@ViewBag.Title</h2>
+
+@if (Model.Rows.Count == 0)
+{
+    <div class="no-data">Bạn chưa có giao dịch nào.</div>
+}
+else
+{
+    <table>
+        <tr>
+            <th>Mã hóa đơn</th>
+            <th>Ngày tạo</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá bán</th>
+            <th>Thành tiền</th>
+        </tr>
+
+        @foreach (System.Data.DataRow r in Model.Rows)
+        {
+            decimal gia = Convert.ToDecimal(r["Gia"]);
+            int sl = Convert.ToInt32(r["SoLuong"]);
+            decimal thanhTien = gia * sl;
+
+            <tr>
+                <td>@r["MaHoaDon"]</td>
+                <td>@Convert.ToDateTime(r["NgayTao"]).ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@r["TenSP"]</td>
+                <td>@r["SoLuong"]</td>
+                <td>@String.Format("{0:#,##0}", r["Gia"]) đ</td>
+                <td>@String.Format("{0:#,##0}", thanhTien) đ</td>
+            </tr>
+        }
+    </table>
+}
+
+<div class="back">
+    <a asp-controller="Home" asp-action="Index">⬅ Quay lại trang chủ</a>
+</div>

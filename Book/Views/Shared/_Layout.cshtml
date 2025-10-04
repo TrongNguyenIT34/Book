@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Data
+@inject Book.Models.Database db
+
+@{
+    string sql = "SELECT * FROM Loai";
+    DataTable loaiTable = db.LayDuLieu(sql);
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cửa hàng sách</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">📘 Nhà sách trực tuyến</div>
+        <ul class="menu">
+            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Thông tin</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Diễn đàn</a></li>
+            <li><a asp-controller="Home" asp-action="Index">Liên hệ</a></li>
+            @if (Context.Session.GetString("TenKH") != null)
+            {
+                <li><a asp-controller="HoaDon" asp-action="LichSu">Lịch sử giao dịch</a></li>
+            }
+        </ul>
+        <div class="account">
+            @if (Context.Session.GetString("TenKH") != null)
+            {
+                <span>Chào bạn, <b>@Context.Session.GetString("TenKH")</b></span>
+                <a asp-controller="TaiKhoan" asp-action="DangXuat" class="btn">Đăng xuất</a>
+            }
+            else
+            {
+                <a asp-controller="TaiKhoan" asp-action="DangNhap" class="btn">Đăng nhập</a>
+                <a asp-controller="TaiKhoan" asp-action="DangNhap" class="btn">Đăng ký ngay</a>
+            }
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h4>Danh mục</h4>
+            <ul>
+                @foreach (DataRow r in loaiTable.Rows)
+                {
+                    <li>
+                        <a asp-controller="SanPham" asp-action="TheoLoai" asp-route-id="@r["MaLoai"]">
+                            @r["TenLoai"]
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>&copy; 2025 - Nhà sách trực tuyến</p>
+    </div>
+</body>
+</html>

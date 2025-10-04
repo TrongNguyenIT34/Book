@@ -1,0 +1,13 @@
+﻿@model System.Data.DataTable
+
+<h4>Danh mục</h4>
+<ul>
+    @foreach (System.Data.DataRow r in Model.Rows)
+    {
+        <li>
+            <a asp-controller="SanPham" asp-action="TheoLoai" asp-route-id="@r["MaLoai"]">
+                @r["TenLoai"]
+            </a>
+        </li>
+    }
+</ul>
